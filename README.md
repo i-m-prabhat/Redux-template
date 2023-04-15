@@ -1,70 +1,431 @@
-# Getting Started with Create React App
+# What is Redux?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Redux is a state management library for JavaScript applications. It provides a centralized store that holds the state of your entire application, which can be accessed and modified using a set of predefined actions.
 
-## Available Scripts
+In Redux, the state of your application is stored in a single object called the `"store."` You can think of the store as a global object that holds all the data for your application. To update the state, you dispatch actions to the store, which tell it what changes to make. The store then applies those changes and notifies any listeners that the state has been updated.
 
-In the project directory, you can run:
+## Setting up Redux with React
 
-### `npm start`
+To use Redux with React, you need to install both the `react-redux` and `redux` packages:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+npm install --save react-redux redux
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Common folder structure of Redux app with React
 
-### `npm test`
+```
+├── public/
+|   └── index.html
+├── src/
+|   ├── actions/
+|   |   └── index.js
+|   |
+|   ├── components/
+|   |   ├── Counter.js
+|   |   └── App.js
+|   |
+|   ├── reducers/
+|   |   ├── index.js
+|   |   └── counter.js
+|   |
+|   ├── store/
+|   |   └── index.js
+|   |
+|   └── index.js
+|
+├── package.json
+├── package-lock.json
+└── README.md
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
 
-### `npm run build`
+Let's go through each folder and file:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`public/index.html` - This file in a React project is the main entry point for the application, responsible for loading the JavaScript code and rendering it in the browser. It is typically a single file that serves as the entry point for the entire application, with different views or pages handled by a client-side router.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`actions/` - This folder contains all of our Redux action creators. These are functions that create and return action objects that are dispatched to the Redux store.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`actions/index.js` - This file exports all of our action creators so that they can be imported into other parts of our app.
 
-### `npm run eject`
+`components/` - This folder contains all of our React components.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+`components/Counter.js` - This file contains the code for our Counter component, which displays the current count and provides buttons to increment and decrement it.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`components/App.js` - This file contains the code for our top-level App component, which renders the Counter component and any other components that make up our app.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+`reducers/` - This folder contains all of our Redux reducers. These are functions that take in the current state of the store and an action object, and return a new state based on the action.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+`reducers/index.js` - This file combines all of our reducers into a single reducer that can be passed to the Redux store.
 
-## Learn More
+`reducers/counter.js` - This file contains the code for our counter reducer, which handles actions related to the count.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`store/` - This folder contains our Redux store.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`store/index.js` - This file creates our Redux store using the combined reducer from the reducers folder.
 
-### Code Splitting
+`index.js` - This file is the entry point for our app. It renders the App component and provides the Redux store to our app using the Provider component from the react-redux package.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`package.json` - is used to specify the dependencies required by the project, including the name, version, and other metadata about the project. It also allows developers to specify additional configuration settings, such as scripts to run during the build process. package.json is essential for managing the dependencies of a Node.js project, and it can be used to install and manage dependencies using package managers like npm or yarn.
 
-### Analyzing the Bundle Size
+`package-lock.json` - is used to lock the dependencies of a project to specific versions. It records the exact version of every package and its sub-dependencies that were installed in the project. This helps to ensure that the same versions of packages are installed on different machines, and it prevents accidental upgrades or downgrades of dependencies. package-lock.json is automatically generated by npm or yarn when dependencies are installed or updated, and it should be committed to version control along with package.json.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+`README.md` - It is an essential file in software projects that provides an introduction and overview of the project. It helps users quickly get up to speed with the project, and it provides important information and instructions for how to install, use, and contribute to the project.
 
-### Making a Progressive Web App
+Here's an example implementation of the code:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### `actions/index.js`
 
-### Advanced Configuration
+```
+export const increment = () => ({
+  type: 'INCREMENT'
+});
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+export const decrement = () => ({
+  type: 'DECREMENT'
+});
+```
 
-### Deployment
+`actions/index.js` exports two action creators, increment and decrement, which create action objects with type 'INCREMENT' and 'DECREMENT', respectively.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### `components/Counter.js`
 
-### `npm run build` fails to minify
+```
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from '../actions';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+function Counter() {
+  const count = useSelector(state => state.count);
+  const dispatch = useDispatch();
+
+  const handleIncrement = () => {
+    dispatch(increment());
+  };
+
+  const handleDecrement = () => {
+    dispatch(decrement());
+  };
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={handleIncrement}>+</button>
+      <button onClick={handleDecrement}>-</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+`components/Counter.js` is a functional component that displays the current count and provides buttons to increment and decrement it. It uses the useSelector and useDispatch hooks from the react-redux package to access the count state and dispatch actions to the store.
+
+#### `components/App.js`
+
+```
+import React from 'react';
+import Counter from './Counter';
+
+function App() {
+  return (
+    <div>
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+```
+
+`components/App.js` is a functional component that renders the Counter component.
+
+#### `reducers/index.js`
+
+```
+import { combineReducers } from 'redux';
+import counterReducer from './counter';
+
+const rootReducer = combineReducers({
+  count: counterReducer
+});
+
+export default rootReducer;
+```
+
+`reducers/index.js` combines our counterReducer into a single root reducer using the combineReducers function from the redux package.
+
+#### `reducers/counter.js`
+
+```
+const initialState = {
+  count: 0
+};
+
+const counterReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return {
+        ...state,
+        count: state.count + 1
+      };
+    case 'DECREMENT':
+      return {
+        ...state,
+        count: state.count - 1
+      };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+```
+
+`reducers/counter.js` is our counterReducer that takes in the current state and an action and returns a new state based on the action type.
+
+#### `store/index.js`
+
+```
+import { createStore } from 'redux';
+import rootReducer from '../reducers';
+
+const store = createStore(rootReducer);
+
+export default store;
+```
+
+`store/index.js` creates our Redux store using the createStore function from the redux package and our root reducer.
+
+#### `index.js`
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import App from './components/App';
+import store from './store';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+`index.js` is the entry point for our app that renders the App component and provides the Redux store to our app using the Provider component from the react-redux package.
+
+This folder structure and code should be a good starting point for building a React app with Redux.
+
+# 📰Example of a react app that manage state using Redux
+
+### `Step 1`: Create a new React app
+
+To create a new React app, you can use create-react-app. Run the following command in your terminal:
+
+```
+npx create-react-app my-app
+```
+
+Replace my-app with the name of your app. This will create a new React app with all the necessary files and folders.
+
+### `Step 2`: Install Redux and React-Redux
+
+Next, you need to install Redux and React-Redux. Run the following command in your terminal:
+
+```
+npm install redux react-redux
+```
+
+This will install both Redux and React-Redux as dependencies in your app.
+
+### `Step 3`: Create a Redux store
+
+In Redux, a store is where all the application state is kept. To create a store, you need to define a reducer function that specifies how the state should be updated in response to actions.
+
+Create a new file called `store.js` in your app's `src` folder and add the following code:
+
+```
+import { createStore } from 'redux';
+
+const initialState = {
+  // Define your initial state here
+};
+
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    // Define your actions and their corresponding state updates here
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer);
+
+export default store;
+```
+
+This creates a Redux store with an initial state and a reducer function that returns the current state in response to any action. You can add your own actions and state updates to this reducer as needed.
+
+### `Step 4`: Connect your app to the Redux store
+
+To connect your app to the Redux store, you need to wrap your app in a `Provider` component from the `react-redux` package. This provides the store to all the components in your app.
+
+In your app's `index.js` file, import the `Provider` component and the store you created:
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import App from './App';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+This wraps your App component in the Provider component and passes in the store as a prop.
+
+### `Step 5`: Create actions and action creators
+
+In Redux, actions are plain JavaScript objects that describe what happened in your app. They typically have a `type` property that describes the type of action, and any additional data as needed.
+
+To create an action, define a new constant for the action type and export it from a new file called `types.js`:
+
+```
+export const ADD_TODO = 'ADD_TODO';
+```
+
+This defines an action type called ADD_TODO.
+
+Next, create an action creator function that returns the action object. In a new file called `actions.js`, add the following code:
+
+```
+import { ADD_TODO } from './types';
+
+export function addTodo(todo) {
+  return {
+    type: ADD_TODO,
+    payload: todo,
+  };
+}
+```
+
+This creates an action creator function called `addTodo` that takes a `todo` object as an argument and returns an action object with the `ADD_TODO` type and the `todo` object as the payload.
+
+### `Step 6`: Update the reducer to handle actions
+
+To handle actions in your reducer, you need to update the switch statement to return a new state based on the action type and payload.
+
+For example, to handle the `ADD_TODO` action, you can update the reducer in your `store.js` file like this:
+
+```
+import { createStore } from 'redux';
+import { ADD_TODO } from './types';
+
+const initialState = {
+  todos: [],
+};
+
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case ADD_TODO:
+      return {
+        ...state,
+        todos: [...state.todos, action.payload],
+      };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer);
+
+export default store;
+```
+
+This updates the `initialState` to include a `todos` array, and adds a case for the `ADD_TODO` action that returns a new state with the `todo` object added to the `todos` array.
+
+### `Step 7`: Connect components to the Redux store
+
+To connect your components to the Redux store, you need to use the `connect` function from `react-redux`.
+
+For example, to connect a `TodoList` component to the Redux store and display the list of todos, you can add the following code:
+
+```
+import React from 'react';
+import { connect } from 'react-redux';
+
+function TodoList({ todos }) {
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>{todo.text}</li>
+      ))}
+    </ul>
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todos,
+  };
+}
+
+export default connect(mapStateToProps)(TodoList);
+```
+
+This creates a `TodoList` component that receives the `todos` array as a prop, and maps over the array to render a list of todo items.
+
+The `mapStateToProps` function maps the Redux state to the component props, so that the `todos` array is available as a prop.
+
+### `Step 8`: Dispatch actions from components
+
+To dispatch actions from your components, you need to use the `dispatch` function provided by the `connect` function.
+
+For example, to dispatch the `ADD_TODO` action from a `AddTodo` component when a form is submitted, you can add the following code:
+
+```
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addTodo } from './actions';
+
+function AddTodo({ dispatch }) {
+  const [text, setText] = useState('');
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    dispatch(addTodo({ id: Date.now(), text }));
+    setText('');
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+      />
+      <button type="submit">Add Todo</button>
+    </form>
+  );
+}
+
+export default connect()(AddTodo);
+```
+
+This creates an `AddTodo` component that dispatches the `ADD_TODO` action with a `todo` object that includes a unique `id` and the `text` value from a form input.
+
+The `connect` function is used with an empty `mapStateToProps` function, since this component doesn't need any state from the Redux store.
+
+And that's it! With these steps, you should now have a React app that uses Redux to manage state. Keep in mind that this is just a basic example, and there are many more features and concepts to explore in Redux.
+
+📝More notes comming soon.......
+<br/> For more info visit official website or redux 👉🏻 <a href="https://react-redux.js.org/">https://react-redux.js.org</a>
+
+<a href="#">🙃Back to Top 🔼</a>
