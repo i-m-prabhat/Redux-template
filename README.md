@@ -4,6 +4,16 @@ Redux is a state management library for JavaScript applications. It provides a c
 
 In Redux, the state of your application is stored in a single object called the `"store."` You can think of the store as a global object that holds all the data for your application. To update the state, you dispatch actions to the store, which tell it what changes to make. The store then applies those changes and notifies any listeners that the state has been updated.
 
+## Create a React App
+
+To create a new React app, you can use create-react-app. Run the following command in your terminal:
+
+```
+npx create-react-app my-app
+```
+
+Replace my-app with the name of your app. This will create a new React app with all the necessary files and folders.
+
 ## Setting up Redux with React
 
 To use Redux with React, you need to install both the `react-redux` and `redux` packages:
